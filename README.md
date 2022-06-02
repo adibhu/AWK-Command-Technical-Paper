@@ -66,31 +66,72 @@
       
       Use of NR built-in variables:
          awk '{print NR,$0}' employee.txt
-         # This command will display line mumber
+         # This command will display line mumber for each row
          
       Use of NF built-in variables 
          awk '{print $1,$NF}' employee.txt
-         # This command will display last field
+         # This command will display last field from each column
          
       Another use of NR built-in variables  
          awk 'NR==3, NR==6 {print NR,$0}' employee.txt
          # This command will display line from 3 to 6
-       
-      To find the length of the longest line present in the file:
-         awk '{ if (length($0) > max) max = length($0) } END { print max }' geeksforgeeks.txt
-         
-      To print the squares of first numbers from 1 to n say 6:  
-         awk 'BEGIN { for(i=1;i<=6;i++) print "square of", i, "is",i*i; }' 
+    
+   #### Some other useful commands to understand Awk briefly
+      
+      This is some of the basic stuff for displaying specific column and row number -
+      
+         awk '{print}' temp.csv  /// prints whole file as it is
+
+         awk '{print $1}' temp.csv /// prints 1st column
+
+         awk '{print NR,$0}' temp /// NR used to print the row number
+
+         awk '{print $NF}' temp /// $NF used to print the last column
+
+         /// NR-Row Number
+         /// NF-Column Number
+         /// $NR-First Column Values
+         /// $NF-Last Column Values
+      
+      Now for checking the rows which contains the words we want we can use // and mention the word inside // as given in example
+         awk '/Hii/ {print}' temp /// prints the rows which contains given word
+      
+      Now we understood how find rows which contains given word but for finding rows which are starting with given word then we use ^ .
+         awk '/^Hi/ {print}' temp /// prints the rows which starts with the given word
+        
+      Now suppose if we have to check the presense of a word in specific column then we can use index for it.
+         awk -F, 'index($3, "Royals") {print}' temp.csv /// prints the all rows whose 3 column contains Royals in it
+      
+      Now for splitting the row values using our own character we can use -F and mention the character after -F using which you wants to split the data.
+         awk -F, '{print}' temp /// prints values according to , splitting
+      
+      Incase if we want to add the values from whole column then we can define function something like this
+         awk -F, '{s+=$1} END {print s}' temp.csv /// it will add all the first column values and it will print them
+
+      Now we can use a for loop also for manupulating the data as shown in the below code
+         awk 'BEGIN {for(i=1;i<=10;i++) print i,"*",i,"=",i*i}' /// prints square of number from 1 to 10
          square of 1 is 1
          square of 2 is 4
          square of 3 is 9
          square of 4 is 16
          square of 5 is 25
          square of 6 is 36
+         /// BEGIN is used for starting a function
+      
+      We can use if statement also inside Awk for manupulating the data
+         awk '{ if(length($1)>length(max) ) max=$1 } END {print max}' temp.csv
+         /// this command will print highest length word from first column where END is used for ending a function and max is basically our variable for          storing the value.
+      
+      To find the length of the longest line present in the file:
+         awk '{ if (length($0) > max) max = length($0) } END { print max }' geeksforgeeks.txt
+         /// here in this command $0 is used for getting whole row as output
       
       To find all entries who contains Bangalore as substring in given column and for calculating the sum of given column:
          awk -F, 'index($3,"Bangalore") {print $18}' | awk '{s+=$1} END {print s}'
-         # This command will print all runs made by rcb in all seasons
+         # This command will print all runs made by rcb in all seasons, here we are using output of one Awk command and we are adding that all values              using another Awk command
+         
+      Now for fetching and storing the values from files we can use
+         awk '{ print $2 }' text.txt > outputfile.txt
 
 ### Conclusion
    
