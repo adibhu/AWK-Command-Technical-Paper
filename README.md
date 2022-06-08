@@ -18,6 +18,7 @@
       It searches one or more files to see if they contain lines that matches with the specified patterns and 
       then perform the associated  actions.
    
+   hiih hf;;okok
    #### What can we do with Awk ?
       
       1. AWK Operations: 
